@@ -2,6 +2,31 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <time.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <stdbool.h>
+
+struct fileReader
+{
+    int i ;
+    int j ;
+    int rowToRead ;
+    char filename[] ;
+};
+
+int rowStore[] ;    //global array to store the row and then put the values on 2d array
+
+void* readFile(void *arg)
+{
+    struct fileReader *reader = (struct fileReader *)arg;
+    FILE *in1 = fopen(&(reader.filename),"r");
+    for(int row = 0; row < reader->i ; row++ )
+    {
+        fscanf(in1,"%d",rowStore[row]) ;
+    }
+}
 
 
 int main(int argc, char *argv[])
@@ -27,13 +52,26 @@ int main(int argc, char *argv[])
     int matrix1[i][j] ;
     int matrix2[j][k] ;
 
-    for(int rows = 0 ; rows < i ; rows++)
-        for(int cols = 0 ; cols < j ; cols++)
-            fscanf(in1,"%d",&matrix1[rows][cols]);
+    struct fileReader matrix1_arg ;
+    matrix1_arg.i = i ;
+    matrix1_arg.j = j ;
+    matrix1_arg.filename[7] = "in1.txt" ;
+    matrix1_arg.rowToRead = 0;
 
-    for(int rows = 0 ; rows < j ; rows++)
-        for(int cols = 0 ; cols < k ; cols++)
-            fscanf(in2,"%d",&matrix2[rows][cols]);
+    struct fileReader matrix2_arg ;
+    matrix2_arg.i = j ;
+    matrix2_arg.j = k ;
+    matrix2_arg.filename[7] = "in2.txt" ;
+    matrix2_arg.rowToRead = 0;
+
+
+    // for(int rows = 0 ; rows < i ; rows++)
+    //     for(int cols = 0 ; cols < j ; cols++)
+    //         fscanf(in1,"%d",&matrix1[rows][cols]);
+
+    // for(int rows = 0 ; rows < j ; rows++)
+    //     for(int cols = 0 ; cols < k ; cols++)
+    //         fscanf(in2,"%d",&matrix2[rows][cols]);
 
     
 }

@@ -1,3 +1,7 @@
 argc will be the number of strings pointed to by argv
 
 https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/GitHub-SSH-Key-Setup-Config-Ubuntu-Linux
+
+https://www.youtube.com/watch?v=w0mgn6OLKUs -> reading specific lines from a file
+
+https://www.youtube.com/watch?v=QbFM0YroaF0 -> threading
