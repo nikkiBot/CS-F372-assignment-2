@@ -24,5 +24,16 @@ int main(int argc, char *argv[])
     int j = atoi(argv[2]);
     int k = atoi(argv[3]);
 
+    int matrix1[i][j] ;
+    int matrix2[j][k] ;
+
+    for(int rows = 0 ; rows < i ; rows++)
+        for(int cols = 0 ; cols < j ; cols++)
+            fscanf(in1,"%d",&matrix1[rows][cols]);
+
+    for(int rows = 0 ; rows < j ; rows++)
+        for(int cols = 0 ; cols < k ; cols++)
+            fscanf(in2,"%d",&matrix2[rows][cols]);
+
     
 }
