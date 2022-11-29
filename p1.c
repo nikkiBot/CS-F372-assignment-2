@@ -56,7 +56,7 @@ int rowStore[] ;    //global array to store the row and then put the values on 2
 void* readFile(void *arg)
 {
     struct fileReader *reader = (struct fileReader *)arg;
-    FILE *in1 = fopen(&(reader.filename),"r");
+    FILE *in1 = fopen(reader->filename,"r");
     for(int row = 0; row < reader->i ; row++ )
     {
         fscanf(in1,"%d",rowStore[row]) ;
@@ -108,5 +108,5 @@ int main(int argc, char *argv[])
     //     for(int cols = 0 ; cols < k ; cols++)
     //         fscanf(in2,"%d",&matrix2[rows][cols]);
 
-    
+    exit(0);
 }
