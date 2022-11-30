@@ -15,7 +15,7 @@ int rowStore[] ;    //global array to store the row and then put the values on 2
  * @brief This function is used to read the file and store the data in the array
  * 
  * @param arg 
- * @return NULL
+ * @return NULLptr
  */
 void *readMyFile(void *arg)
 {
@@ -40,6 +40,12 @@ void *readMyFile(void *arg)
         free(line) ;
     return NULL ;
 }
+
+/**
+ * @brief This function takes in2.txt and then writes the transpose of the matrix in the text file
+ * 
+ * @param fp, the file pointer to be passed 
+ */
 void preProcess(FILE *fp){
     
     return ;
@@ -52,9 +58,13 @@ int main(int argc, char *argv[])
 	}
 
     FILE *in1 = fopen(argv[4], "r");
-    FILE *in2 = fopen(argv[5], "r");
-    // FILE *in2_pre_processor = fopen(argv[5], "w+");
+    FILE *in2 = fopen(argv[5], "r+"); //write access for preprocessing
     FILE *out = fopen(argv[6], "w+");
+
+    preProcess(in2);
+    
+    clock_t t ;
+    t = clock();
 
     if(in1 == NULL || in2 == NULL || out == NULL){
         perror("fopen");
@@ -67,27 +77,44 @@ int main(int argc, char *argv[])
 
     int matrix1[i][j] ;
     int matrix2[j][k] ;
+    int result[i][k] ;
 
-    struct fileReader matrix1_arg ;
-    matrix1_arg.i = i ;
-    matrix1_arg.j = j ;
-    matrix1_arg.filename[7] = "in1.txt" ;
-    matrix1_arg.rowToRead = 0;
+    struct fileReader matrix1_arg[i] ;
+    struct fileReader matrix2_arg[j] ;
 
-    struct fileReader matrix2_arg ;
-    matrix2_arg.i = j ;
-    matrix2_arg.j = k ;
-    matrix2_arg.filename[7] = "in2.txt" ;
-    matrix2_arg.rowToRead = 0;
+    pthread_t tid_mat1[i] ;
+    pthread_t tid_mat2[j] ;
 
+    //Creating threads to read rows of in1.txt
+    for(int row = 0; row < i ; row++)
+    {
+        matrix1_arg[row].i = i ;
+        matrix1_arg[row].j = j ;
+        matrix1_arg[row].rowToRead = row ;
+        strcpy(matrix1_arg[row].filename,argv[4]) ;
+        pthread_create(&tid_mat1[row],NULL, readMyFile,(void *)&matrix1_arg[row]) ;
+    }
+    for(int row = 0 ; row < i ; row++)
+    {
+        pthread_join(tid_mat1[row], NULL) ;
+    }
 
-    // for(int rows = 0 ; rows < i ; rows++)
-    //     for(int cols = 0 ; cols < j ; cols++)
-    //         fscanf(in1,"%d",&matrix1[rows][cols]);
+    //Creating threads to read columns of in2.txt
+    for(int row = 0; row < i ; row++)
+    {
+        matrix2_arg[row].i = j ;
+        matrix2_arg[row].j = k ;
+        matrix2_arg[row].rowToRead = row ;
+        strcpy(matrix2_arg[row].filename,argv[5]) ;
+        pthread_create(&tid_mat2[row],NULL, readMyFile,(void *)&matrix2_arg[row]) ;
+    }
+    for(int row = 0 ; row < i ; row++)
+    {
+        pthread_join(tid_mat2[row], NULL) ;
+    }
 
-    // for(int rows = 0 ; rows < j ; rows++)
-    //     for(int cols = 0 ; cols < k ; cols++)
-    //         fscanf(in2,"%d",&matrix2[rows][cols]);
-
+    t = clock() - t ;
+    double timeTaken = ((double)t)/ CLOCKS_PER_SEC ;
+    printf("%f", timeTaken) ;
     exit(0);
 }
