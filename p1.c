@@ -16,6 +16,8 @@ struct fileReader
     char filename[] ;
 };
 
+int rowStore[] ;    //global array to store the row and then put the values on 2d array
+
 /**
  * @brief This function is used to read the file and store the data in the array
  * 
@@ -34,7 +36,8 @@ void *readMyFile(void *arg)
     {
         if (i == fr->rowToRead)
         {
-            printf("%s", line) ;
+            // printf("%s", line) ;
+            rowStore[i] = atoi(line) ;
             break ;
         }
         i++ ;
@@ -44,25 +47,6 @@ void *readMyFile(void *arg)
         free(line) ;
     return NULL ;
 }
-
-int rowStore[] ;    //global array to store the row and then put the values on 2d array
-
-/**
- * @brief This function is used to read a single row from the file input
- * 
- * @param argument struct
- * @return NULL 
- */
-void* readFile(void *arg)
-{
-    struct fileReader *reader = (struct fileReader *)arg;
-    FILE *in1 = fopen(reader->filename,"r");
-    for(int row = 0; row < reader->i ; row++ )
-    {
-        fscanf(in1,"%d",rowStore[row]) ;
-    }
-}
-
 
 int main(int argc, char *argv[])
 {

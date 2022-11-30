@@ -5,3 +5,43 @@ https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Gi
 https://www.youtube.com/watch?v=w0mgn6OLKUs -> reading specific lines from a file
 
 https://www.youtube.com/watch?v=QbFM0YroaF0 -> threading
+
+https://www.youtube.com/watch?v=Adtrk3PREQI -> sum thread example
+
+pthread_mutex_t hello_msg_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t msg_created_cond = PTHREAD_COND_INITIALIZER;
+int msg_initialized = 0;
+
+
+pthread_mutex_lock(&hello_msg_lock);
+msg_initialized = 1;
+pthread_cond_signal(&msg_created_cond);
+pthread_mutex_unlock(&hello_msg_lock);
+
+pthread_mutex_lock(&hello_msg_lock);
+while(msg_initialized == 0) {
+pthread_cond_wait(&msg_created_cond, &hello_msg_lock);
+}
+pthread_mutex_unlock(&hello_msg_lock) ;|
+
+char line [100];
+while (fgets (line, sizeof(line), the_file)) {
+// print the line
+printf("%s", line);
+}
+
+/**
+ * @brief This function is used to read a single row from the file input
+ * 
+ * @param argument struct
+ * @return NULL 
+ */
+void* readFile(void *arg)
+{
+    struct fileReader *reader = (struct fileReader *)arg;
+    FILE *in1 = fopen(reader->filename,"r");
+    for(int row = 0; row < reader->i ; row++ )
+    {
+        fscanf(in1,"%d",rowStore[row]) ;
+    }
+}
