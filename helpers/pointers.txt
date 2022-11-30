@@ -54,7 +54,14 @@ r+ - Both read and write
 w+ - Both read and write but empties file contents first
 a+ - Reads from beginning but appends only at EOF
 ----------------------------------------------------------
-
+#ifndef STRING_UTILS_H
+#define STRING_UTILS_H
+#include <string.h>
+code here
+#endif
+----------------------------------------------------------
+https://www.youtube.com/watch?v=Mqb2dVRe0uo&list=PLfqABt5AS4FmErobw8YyTwXDUE5nPH5lH&index=123 ->Communicating between processes (using pipes) in C
+----------------------------------------------------------
 
 
 
