@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <time.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <stdbool.h>
+#include <../header/p1.h>
+
 
 struct fileReader
 {
@@ -47,7 +40,10 @@ void *readMyFile(void *arg)
         free(line) ;
     return NULL ;
 }
-
+void preProcess(FILE *fp){
+    
+    return ;
+}
 int main(int argc, char *argv[])
 {
     if (argc != 7) {
