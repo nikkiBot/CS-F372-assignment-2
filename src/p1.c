@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 
     FILE *in1 = fopen(argv[4], "r");
     FILE *in2 = fopen(argv[5], "r");
+    // FILE *in2_pre_processor = fopen(argv[5], "w+");
     FILE *out = fopen(argv[6], "w+");
 
     if(in1 == NULL || in2 == NULL || out == NULL){

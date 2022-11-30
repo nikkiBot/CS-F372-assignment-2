@@ -45,3 +45,36 @@ void* readFile(void *arg)
         fscanf(in1,"%d",rowStore[row]) ;
     }
 }
+
+----------------------------------------------------------
+File modes :
+r - reading, w -for writing, which starts at BOF
+a - append mode, starts apppending content at EOF
+r+ - Both read and write
+w+ - Both read and write but empties file contents first
+a+ - Reads from beginning but appends only at EOF
+----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
